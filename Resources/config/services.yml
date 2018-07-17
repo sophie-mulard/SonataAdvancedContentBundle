@@ -1,0 +1,24 @@
+services:
+    sherlockode_advanced_content.admin.content_type:
+        class: Sherlockode\SonataAdvancedContentBundle\Admin\ContentTypeAdmin
+        arguments: [~, ~, ~]
+        calls:
+            - [setFormBuilderManager, ['@sherlockode_advanced_content.form_builder_manager']]
+            - [ setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/ContentType/edit.html.twig']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Content, label: Content Type, show_in_dashboard: true}
+    sherlockode_advanced_content.admin.content:
+        class: Sherlockode\SonataAdvancedContentBundle\Admin\ContentAdmin
+        arguments: [~, ~, ~]
+        calls:
+            - [setFormBuilderManager, ['@sherlockode_advanced_content.form_builder_manager']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+
+    sherlockode_advanced_content.sonata_menu_listener:
+        class: Sherlockode\SonataAdvancedContentBundle\EventListener\MenuBuilderListener
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@sherlockode_advanced_content.configuration_manager'
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }

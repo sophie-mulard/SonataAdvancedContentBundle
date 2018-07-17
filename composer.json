@@ -1,0 +1,20 @@
+{
+    "name": "sherlockode/sonata-advanced-content-bundle",
+    "type": "symfony-bundle",
+    "description": "Sonata admin integration for SherlockodeAdvancedContentBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sherlockode",
+            "email": "contact@sherlockode.fr"
+        }
+    ],
+    "require": {
+        "php": "5.6 || ^7.1",
+        "sherlockode/advanced-content-bundle": "*",
+        "symfony/framework-bundle": "^2.8 || ^3.4"
+    },
+    "autoload": {
+        "psr-4": { "Sherlockode\\SonataAdvancedContentBundle\\": "" }
+    }
+}
