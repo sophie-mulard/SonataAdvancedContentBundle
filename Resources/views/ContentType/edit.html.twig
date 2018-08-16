@@ -1,12 +1,13 @@
 {% extends '@SonataAdmin/CRUD/edit.html.twig' %}
 
+{% trans_default_domain 'AdvancedContentBundle' %}
 {% block sonata_page_content %}
     {{ parent() }}
     <div class="modal fade acb-modal-add-field">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Add field</h4>
+                    <h4 class="modal-title">{{ 'content_type.form.add_field'|trans }}</h4>
                 </div>
                 <div class="modal-body"></div>
             </div>

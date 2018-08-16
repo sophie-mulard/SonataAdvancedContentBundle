@@ -52,8 +52,8 @@ class ContentAdmin extends AbstractAdmin
     public function configureListFields(ListMapper $list)
     {
         $list
-            ->add('id')
-            ->add('contentType', null, ['associated_property' => 'name'])
+            ->add('id', null, ['label' => 'content.id'])
+            ->add('contentType', null, ['associated_property' => 'name', 'label' => 'content.content_type'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'edit'   => [],
