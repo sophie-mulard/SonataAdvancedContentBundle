@@ -27,7 +27,7 @@ class MenuBuilderListener
 
     public function addMenuItems(ConfigureMenuEvent $event)
     {
-        $menu = $event->getMenu()->getChild('Content');
+        $menu = $event->getMenu()->getChild('content.label');
 
         $contentTypeClass = $this->configurationManager->getEntityClass('content_type');
         $contentTypes = $this->om->getRepository($contentTypeClass)->findAll();

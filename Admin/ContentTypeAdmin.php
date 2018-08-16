@@ -32,8 +32,8 @@ class ContentTypeAdmin extends AbstractAdmin
     public function configureFormFields(FormMapper $form)
     {
         $form
-            ->add('name', TextType::class)
-            ->add('fields', FormType::class) // dummy call to register the field
+            ->add('name', TextType::class, ['label' => 'content_type.name'])
+            ->add('fields', FormType::class, ['label' => 'content_type.fields']) // dummy call to register the field
         ;
         $this->formBuilderManager->buildContentTypeForm($form->getFormBuilder(), $this->getSubject());
     }
@@ -41,7 +41,7 @@ class ContentTypeAdmin extends AbstractAdmin
     public function configureListFields(ListMapper $list)
     {
         $list
-            ->add('name')
+            ->add('name', null, ['label' => 'content_type.name'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'edit'   => [],
