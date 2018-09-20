@@ -26,6 +26,14 @@ class ContentAdmin extends AbstractAdmin
         $this->formBuilderManager = $manager;
     }
 
+    public function getFormTheme()
+    {
+        return array_merge(
+            parent::getFormTheme(),
+            ['@SherlockodeAdvancedContent/Form/content_type.html.twig']
+        );
+    }
+
     public function setContentTypeClass($class)
     {
         $this->contentTypeClass = $class;
