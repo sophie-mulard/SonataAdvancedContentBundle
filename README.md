@@ -32,6 +32,7 @@ sonata_admin:
     assets:
         extra_javascripts:
             - bundles/sherlockodeadvancedcontent/js/content-type.js
+            - bundles/sherlockodeadvancedcontent/js/speakingurl.min.js
         extra_stylesheets:
             - bundles/sherlockodeadvancedcontent/css/content-type.css
 ```
