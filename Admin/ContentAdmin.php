@@ -45,16 +45,21 @@ class ContentAdmin extends AbstractAdmin
             ->add('fieldValues')
         ;
 
-        if (!$this->getSubject()->getId()) {
+        if ($this->hasParentFieldDescription() && $this->getParentFieldDescription()->getOption('content_type')) {
+            $contentType = $this->getParentFieldDescription()->getOption('content_type');
+        } elseif ($this->getSubject() && $this->getSubject()->getContentType()) {
+            $contentType = $this->getSubject()->getContentType();
+        } elseif ($this->getRequest()->get('content_type_id')) {
             $contentTypeId = $this->getRequest()->get('content_type_id');
             $contentType = $this->getModelManager()
                 ->getEntityManager($this->contentTypeClass)
                 ->getRepository($this->contentTypeClass)
                 ->find($contentTypeId);
-            $this->getSubject()->setContentType($contentType);
+        } else {
+            throw new \Exception('Unable to guess the ContentType to use for this object');
         }
 
-        $this->formBuilderManager->buildContentForm($form->getFormBuilder(), $this->getSubject());
+        $this->formBuilderManager->buildContentForm($form->getFormBuilder(), $contentType);
     }
 
     public function configureListFields(ListMapper $list)
