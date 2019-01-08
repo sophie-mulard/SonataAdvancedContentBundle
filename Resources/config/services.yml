@@ -14,6 +14,7 @@ services:
         calls:
             - [setFormBuilderManager, ['@sherlockode_advanced_content.form_builder_manager']]
             - [setTranslationDomain, ['AdvancedContentBundle']]
+            - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Content/edit.html.twig']]
         tags:
             - { name: sonata.admin, manager_type: orm, show_in_dashboard: false}
 
