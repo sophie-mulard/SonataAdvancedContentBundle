@@ -30,7 +30,7 @@ class ContentAdmin extends AbstractAdmin
     {
         return array_merge(
             parent::getFormTheme(),
-            ['@SherlockodeAdvancedContent/Form/content_type.html.twig']
+            ['@SherlockodeAdvancedContent/Form/content.html.twig']
         );
     }
 
