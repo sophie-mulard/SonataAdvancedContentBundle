@@ -3,7 +3,6 @@ services:
         class: Sherlockode\SonataAdvancedContentBundle\Admin\ContentTypeAdmin
         arguments: [~, ~, ~]
         calls:
-            - [setFormBuilderManager, ['@sherlockode_advanced_content.form_builder_manager']]
             - [setContentTypeManager, ['@sherlockode_advanced_content.content_type_manager']]
             - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/ContentType/edit.html.twig']]
             - [setTranslationDomain, ['AdvancedContentBundle']]
@@ -13,7 +12,6 @@ services:
         class: Sherlockode\SonataAdvancedContentBundle\Admin\ContentAdmin
         arguments: [~, ~, ~]
         calls:
-            - [setFormBuilderManager, ['@sherlockode_advanced_content.form_builder_manager']]
             - [setTranslationDomain, ['AdvancedContentBundle']]
             - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Content/edit.html.twig']]
         tags:
