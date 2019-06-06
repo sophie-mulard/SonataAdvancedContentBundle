@@ -4,6 +4,7 @@ namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
 use Sherlockode\AdvancedContentBundle\Form\Type\ContentTypeFormType;
 use Sherlockode\AdvancedContentBundle\Manager\ContentTypeManager;
+use Sherlockode\AdvancedContentBundle\Model\ContentType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -40,7 +41,7 @@ class ContentTypeAdmin extends AbstractAdmin
     {
         // We need to declare each form field through the form mapper to ensure they are displayed correctly
         $form
-            ->add('name', TextType::class, ['label' => 'content_type.name'])
+            ->add('name', TextType::class, ['label' => 'content_type.form.name'])
         ;
         if ($this->getSubject()->getId()) {
             // We need to declare each form field through the form mapper to ensure they are displayed correctly
@@ -88,7 +89,7 @@ class ContentTypeAdmin extends AbstractAdmin
     public function configureListFields(ListMapper $list)
     {
         $list
-            ->add('name', null, ['label' => 'content_type.name'])
+            ->add('name', null, ['label' => 'content_type.form.name'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'edit'   => [],
@@ -101,5 +102,14 @@ class ContentTypeAdmin extends AbstractAdmin
     public function preUpdate($object)
     {
         $this->contentTypeManager->processFieldsChangeType($object, $this->fieldTypes);
+    }
+
+    public function toString($object)
+    {
+        if ($object instanceof ContentType && $object->getName()) {
+            return $object->getName();
+        }
+
+        return parent::toString($object);
     }
 }
