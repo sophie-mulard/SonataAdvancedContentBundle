@@ -5,11 +5,13 @@ Sonata Admin integration for SherlockodeAdvancedContentBundle
 
 ## Installation
 
+The best way to install this bundle is to rely on [Composer](https://getcomposer.org/):
+
 ```bash
-composer require sherlockode/sonata-advanced-content-bundle
+$ composer require sherlockode/sonata-advanced-content-bundle
 ```
 
-Register the bundle in your application's kernel class:
+Register the bundle in your application's kernel:
 
 ```php
 // app/AppKernel.php
@@ -27,7 +29,8 @@ class AppKernel extends Kernel
 ```
 
 Add the specific CSS and JS files from the bundle to the Sonata configuration:
-```
+
+```yaml
 sonata_admin:
     assets:
         extra_javascripts:
