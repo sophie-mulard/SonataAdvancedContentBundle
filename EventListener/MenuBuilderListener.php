@@ -35,6 +35,9 @@ class MenuBuilderListener
         foreach ($contentTypes as $contentType) {
             $menu->addChild('content_type_' . $contentType->getId(), [
                 'label' => $contentType->getName(),
+                'extras' => [
+                    'label_catalogue' => false,
+                ],
                 'route' => 'admin_afb_content_list',
                 'routeParameters' => ['content_type_id' => $contentType->getId()],
             ]);
