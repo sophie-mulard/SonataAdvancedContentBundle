@@ -61,6 +61,7 @@ class ContentAdmin extends AbstractAdmin
             throw new \Exception('Unable to guess the ContentType to use for this object');
         }
 
+        $this->getSubject()->setContentType($contentType);
         $this->formOptions['contentType'] = $contentType;
 
         return $this->getFormContractor()->getFormFactory()
