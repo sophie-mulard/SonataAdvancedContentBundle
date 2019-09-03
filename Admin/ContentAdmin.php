@@ -6,6 +6,7 @@ use Sherlockode\AdvancedContentBundle\Form\Type\ContentType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ContentAdmin extends AbstractAdmin
@@ -32,8 +33,12 @@ class ContentAdmin extends AbstractAdmin
 
     public function configureFormFields(FormMapper $form)
     {
-        // We need to declare each form field through the form mapper to ensure they are displayed correctly
         $form
+            ->add('name', TextType::class, [
+                'label' => 'content.form.name',
+                'required' => false,
+            ])
+            // We need to declare each form field through the form mapper to ensure they are displayed correctly
             ->add('fieldValues')
         ;
     }
@@ -88,6 +93,7 @@ class ContentAdmin extends AbstractAdmin
     {
         $list
             ->add('id', null, ['label' => 'content.id'])
+            ->add('name', null, ['label' => 'content.form.name'])
             ->add('contentType', null, ['associated_property' => 'name', 'label' => 'content.content_type'])
             ->add('_action', 'actions', [
                 'actions' => [
