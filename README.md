@@ -39,3 +39,20 @@ sonata_admin:
         extra_stylesheets:
             - bundles/sherlockodeadvancedcontent/css/content-type.css
 ```
+
+## Security
+
+By default our admins are accessible by ROLE_SUPER_ADMIN. 
+To configure your own role hierarchy, you can use the roles : 
+- ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_TYPE_[PERMISSION] : access to Content Types
+- ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_[PERMISSION] : access to Contents
+
+For example, if you want to grant all permissions for ROLE_ADMIN, you can add : 
+```yaml
+# config/packages/security.yaml
+security:
+    role_hierarchy:
+        ROLE_ADMIN:
+            - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_TYPE_ALL
+            - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_ALL
+```
