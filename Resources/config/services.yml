@@ -6,6 +6,7 @@ services:
             - [setContentTypeManager, ['@sherlockode_advanced_content.content_type_manager']]
             - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/ContentType/edit.html.twig']]
             - [setTranslationDomain, ['AdvancedContentBundle']]
+            - [setConfigurationManager, ['@sherlockode_advanced_content.configuration_manager']]
         tags:
             - { name: sonata.admin, manager_type: orm, group: content.label, label: content_type.label, show_in_dashboard: true}
     sherlockode_advanced_content.admin.content:
@@ -16,6 +17,22 @@ services:
             - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Content/edit.html.twig']]
         tags:
             - { name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+    sherlockode_advanced_content.admin.page_type:
+        class: Sherlockode\SonataAdvancedContentBundle\Admin\PageTypeAdmin
+        arguments: [~, ~, ~]
+        calls:
+            - [setTranslationDomain, ['AdvancedContentBundle']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: content.label, label: page_type.label, show_in_dashboard: true}
+    sherlockode_advanced_content.admin.page:
+        class: Sherlockode\SonataAdvancedContentBundle\Admin\PageAdmin
+        arguments: [~, ~, ~]
+        calls:
+            - [setTranslationDomain, ['AdvancedContentBundle']]
+            - [setConfigurationManager, ['@sherlockode_advanced_content.configuration_manager']]
+            - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Page/edit.html.twig']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: content.label, label: page.label, show_in_dashboard: true}
 
     sherlockode_advanced_content.sonata_menu_listener:
         class: Sherlockode\SonataAdvancedContentBundle\EventListener\MenuBuilderListener

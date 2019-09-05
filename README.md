@@ -46,6 +46,8 @@ By default our admins are accessible by ROLE_SUPER_ADMIN.
 To configure your own role hierarchy, you can use the roles : 
 - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_TYPE_[PERMISSION] : access to Content Types
 - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_[PERMISSION] : access to Contents
+- ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_PAGE_TYPE_[PERMISSION] : access to Page Types
+- ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_PAGE_[PERMISSION] : access to Pages
 
 For example, if you want to grant all permissions for ROLE_ADMIN, you can add : 
 ```yaml
@@ -55,4 +57,6 @@ security:
         ROLE_ADMIN:
             - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_TYPE_ALL
             - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_ALL
+            - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_PAGE_TYPE_ALL
+            - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_PAGE_ALL
 ```
