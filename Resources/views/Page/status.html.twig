@@ -1,0 +1,13 @@
+{% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
+
+{% trans_default_domain 'AdvancedContentBundle' %}
+
+{% block field %}
+    {% if object.status == constant('Sherlockode\\AdvancedContentBundle\\Model\\PageInterface::STATUS_DRAFT') %}
+        {{ 'page.form.statuses.draft'|trans }}
+    {% elseif object.status == constant('Sherlockode\\AdvancedContentBundle\\Model\\PageInterface::STATUS_PUBLISHED') %}
+        {{ 'page.form.statuses.published'|trans }}
+    {% elseif object.status == constant('Sherlockode\\AdvancedContentBundle\\Model\\PageInterface::STATUS_TRASH') %}
+        {{ 'page.form.statuses.trash'|trans }}
+    {% endif %}
+{% endblock %}

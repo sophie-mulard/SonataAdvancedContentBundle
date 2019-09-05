@@ -1,0 +1,11 @@
+{% extends '@SonataAdmin/CRUD/edit.html.twig' %}
+
+{% trans_default_domain 'AdvancedContentBundle' %}
+{% block sonata_page_content %}
+    {{ parent() }}
+    <span class="acb-page-change-type" style="display: none;">{{ 'page.errors.alert_change_type'|trans }}</span>
+{% endblock %}
+
+{% block sonata_form_attributes %}
+    class="edit-page"
+{% endblock %}

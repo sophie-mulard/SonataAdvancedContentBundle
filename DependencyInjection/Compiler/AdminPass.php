@@ -16,5 +16,9 @@ class AdminPass implements CompilerPassInterface
         $container->getDefinition('sherlockode_advanced_content.admin.content')
             ->replaceArgument(1, $mapping['content'])
             ->addMethodCall('setContentTypeClass', [$mapping['content_type']]);
+        $container->getDefinition('sherlockode_advanced_content.admin.page_type')
+            ->replaceArgument(1, $mapping['page_type']);
+        $container->getDefinition('sherlockode_advanced_content.admin.page')
+            ->replaceArgument(1, $mapping['page']);
     }
 }
