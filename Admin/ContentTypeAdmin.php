@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -86,6 +87,11 @@ class ContentTypeAdmin extends AbstractAdmin
                 'choice_label' => 'title',
                 'required' => false,
                 'attr' => ['class' => 'acb-contenttype-page'],
+            ])
+            ->add('allowSeveralContents', CheckboxType::class, [
+                'label' => 'content_type.form.allow_several_contents',
+                'required' => false,
+                'attr' => ['class' => 'acb-contenttype-allow-several-contents'],
             ])
         ;
         if ($this->getSubject()->getId()) {

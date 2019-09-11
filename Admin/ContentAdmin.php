@@ -3,6 +3,7 @@
 namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
 use Sherlockode\AdvancedContentBundle\Form\Type\ContentType;
+use Sherlockode\AdvancedContentBundle\Manager\ContentTypeManager;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -15,6 +16,11 @@ class ContentAdmin extends AbstractAdmin
      * @var string
      */
     private $contentTypeClass;
+
+    /**
+     * @var ContentTypeManager
+     */
+    private $contentTypeManager;
 
     protected $baseRouteName = 'admin_afb_content';
 
@@ -124,5 +130,29 @@ class ContentAdmin extends AbstractAdmin
         return array_merge($parameters, [
             'content_type_id' => $this->getRequest()->get('content_type_id'),
         ]);
+    }
+
+    /**
+     * @param ContentTypeManager $contentTypeManager
+     */
+    public function setContentTypeManager(ContentTypeManager $contentTypeManager)
+    {
+        $this->contentTypeManager = $contentTypeManager;
+    }
+
+    /**
+     * @param string      $action
+     * @param null|object $object
+     *
+     * @return array
+     */
+    public function configureActionButtons($action, $object = null)
+    {
+        $actions = parent::configureActionButtons($action, $object);
+        if (!$this->contentTypeManager->canCreateContentByContentTypeId($this->getRequest()->get('content_type_id'))) {
+            unset($actions['create']);
+        }
+
+        return $actions;
     }
 }
