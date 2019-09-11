@@ -15,6 +15,7 @@ services:
         calls:
             - [setTranslationDomain, ['AdvancedContentBundle']]
             - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Content/edit.html.twig']]
+            - [setContentTypeManager, ['@sherlockode_advanced_content.content_type_manager']]
         tags:
             - { name: sonata.admin, manager_type: orm, show_in_dashboard: false}
     sherlockode_advanced_content.admin.page_type:
