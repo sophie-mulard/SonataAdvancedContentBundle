@@ -11,22 +11,20 @@ The best way to install this bundle is to rely on [Composer](https://getcomposer
 $ composer require sherlockode/sonata-advanced-content-bundle
 ```
 
-Register the bundle in your application's kernel:
+Register the bundle in your application's kernel and make sure that this bundle is added
+after the [AdvancedContentBundle](https://github.com/sherlockode/advanced-content-bundle)
 
 ```php
-// app/AppKernel.php
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = [
-            // ...
-            new Sherlockode\SonataAdvancedContentBundle\SherlockodeSonataAdvancedContentBundle(),
-            // ...
-        ];
-    }
-}
+// config/bundles.php
+<?php
+
+return [
+    /* ... */
+    Sherlockode\AdvancedContentBundle\SherlockodeAdvancedContentBundle::class => ['all' => true],
+    Sherlockode\SonataAdvancedContentBundle\SherlockodeSonataAdvancedContentBundle::class => ['all' => true],
+];
 ```
+
 
 Add the specific CSS and JS files from the bundle to the Sonata configuration:
 
