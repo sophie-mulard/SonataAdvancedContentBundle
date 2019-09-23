@@ -3,6 +3,7 @@
 namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
 use Sherlockode\AdvancedContentBundle\Form\Type\ContentTypeFormType;
+use Sherlockode\AdvancedContentBundle\Form\Type\FieldsType;
 use Sherlockode\AdvancedContentBundle\Manager\ConfigurationManager;
 use Sherlockode\AdvancedContentBundle\Manager\ContentTypeManager;
 use Sherlockode\AdvancedContentBundle\Model\ContentType;
@@ -96,9 +97,11 @@ class ContentTypeAdmin extends AbstractAdmin
         ;
         if ($this->getSubject()->getId()) {
             // We need to declare each form field through the form mapper to ensure they are displayed correctly
-            $form
-                ->add('fields', FormType::class, ['label' => 'content_type.fields'])
-            ;
+            $form->add('fields', FieldsType::class, [
+                'label' => 'content_type.form.fields',
+                'translation_domain' => 'AdvancedContentBundle',
+                'type_choices' => [],
+            ]);
 
             $fieldTypes = [];
             foreach ($this->getSubject()->getFields() as $field) {
