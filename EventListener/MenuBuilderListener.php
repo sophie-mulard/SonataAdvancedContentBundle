@@ -54,5 +54,11 @@ class MenuBuilderListener
                 'routeParameters' => ['content_type_id' => $contentType->getId()],
             ]);
         }
+
+        $menu->addChild('acb_tools', [
+            'label' => 'tools_menu_label',
+            'extras' => ['label_catalogue' => 'AdvancedContentBundle'],
+            'route' => 'sherlockode_acb_tools_index',
+        ]);
     }
 }

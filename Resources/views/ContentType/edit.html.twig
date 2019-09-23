@@ -12,3 +12,8 @@
     data-change-type-url="{{ path('sherlockode_acb_content_type_change_field_type') }}"
     {% endif %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/sherlockodesonataadvancedcontent/js/acb-sonata.js') }}"></script>
+{% endblock %}
