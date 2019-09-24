@@ -4,7 +4,8 @@ namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
 use Sherlockode\AdvancedContentBundle\Form\Type\ContentType;
 use Sherlockode\AdvancedContentBundle\Manager\ConfigurationManager;
-use Sherlockode\AdvancedContentBundle\Model\ContentInterface;
+use Sherlockode\AdvancedContentBundle\Manager\PageManager;
+use Sherlockode\AdvancedContentBundle\Model\ContentTypeInterface;
 use Sherlockode\AdvancedContentBundle\Model\PageInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -20,6 +21,11 @@ class PageAdmin extends AbstractAdmin
      * @var ConfigurationManager
      */
     private $configurationManager;
+
+    /**
+     * @var PageManager
+     */
+    private $pageManager;
 
     public function getFormTheme()
     {
@@ -71,17 +77,20 @@ class PageAdmin extends AbstractAdmin
         }
         $form->end();
 
-        if ($this->getSubject()->getId() && $this->getSubject()->getContent() instanceof ContentInterface) {
-            $form
-                ->with('page.form.tabs.content')
+        if ($this->getSubject()->getId()) {
+            $contentType = $this->pageManager->getPageContentType($this->getSubject());
+            if ($contentType instanceof ContentTypeInterface) {
+                $form
+                    ->with('page.form.tabs.content')
                     ->add('content', ContentType::class, [
-                        'label' => 'page.form.content',
-                        'contentType' => $this->getSubject()->getContent()->getContentType()
+                        'label'       => 'page.form.content',
+                        'contentType' => $contentType,
                     ], [
                         'admin_code' => 'sherlockode_advanced_content.admin.content',
                     ])
-                ->end()
-            ;
+                    ->end()
+                ;
+            }
         }
         $form->end();
     }
@@ -110,5 +119,13 @@ class PageAdmin extends AbstractAdmin
     public function setConfigurationManager(ConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
+    }
+
+    /**
+     * @param PageManager $pageManager
+     */
+    public function setPageManager(PageManager $pageManager)
+    {
+        $this->pageManager = $pageManager;
     }
 }
