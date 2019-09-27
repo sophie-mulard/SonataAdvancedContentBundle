@@ -1,7 +1,7 @@
 jQuery(function ($) {
     'use strict';
     
-    $('body').on('submit', 'form', function(){
+    $('body').on('submit', '.acb-form form', function(){
         let form = $(this);
         setTimeout(function() {
             form.find('button').prop('disabled', true).removeAttr('disabled');

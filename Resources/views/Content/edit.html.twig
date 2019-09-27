@@ -1,7 +1,7 @@
 {% extends '@SonataAdmin/CRUD/edit.html.twig' %}
 
 {% block sonata_tab_content %}
-    <div class="col-md-12">
+    <div class="col-md-12 acb-form">
         {% set groups = admin.formtabs['default'].groups %}
         <div class="row">
             {% for code in groups if admin.formgroups[code] is defined %}

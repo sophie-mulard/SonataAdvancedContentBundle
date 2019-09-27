@@ -2,18 +2,15 @@
 
 {% trans_default_domain 'AdvancedContentBundle' %}
 {% block sonata_page_content %}
-    {{ parent() }}
-    <span class="acb-contenttype-change-link" style="display: none;">{{ 'content_type.errors.alert_change_link'|trans }}</span>
+    <div class="acb-form">
+        {{ parent() }}
+        <span class="acb-contenttype-change-link" style="display: none;">{{ 'content_type.errors.alert_change_link'|trans }}</span>
+    </div>
 {% endblock %}
 
 {% block sonata_form_attributes %}
     class="edit-content-type"
     {% if object.id %}
-    data-change-type-url="{{ path('sherlockode_acb_content_type_change_field_type') }}"
+        data-change-type-url="{{ path('sherlockode_acb_content_type_change_field_type') }}"
     {% endif %}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/sherlockodesonataadvancedcontent/js/acb-sonata.js') }}"></script>
 {% endblock %}

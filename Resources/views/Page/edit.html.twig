@@ -2,15 +2,12 @@
 
 {% trans_default_domain 'AdvancedContentBundle' %}
 {% block sonata_page_content %}
-    {{ parent() }}
-    <span class="acb-page-change-type" style="display: none;">{{ 'page.errors.alert_change_type'|trans }}</span>
+    <div class="acb-form">
+        {{ parent() }}
+        <span class="acb-page-change-type" style="display: none;">{{ 'page.errors.alert_change_type'|trans }}</span>
+    </div>
 {% endblock %}
 
 {% block sonata_form_attributes %}
     class="edit-page"
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/sherlockodesonataadvancedcontent/js/acb-sonata.js') }}"></script>
 {% endblock %}
