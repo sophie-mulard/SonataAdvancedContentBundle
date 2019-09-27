@@ -2,7 +2,7 @@
 {% trans_default_domain 'AdvancedContentBundle' %}
 
 {% block content %}
-    <div class="box box-primary">
+    <div class="box box-primary acb-form">
         <div class="box-header">
             <h3>{{ 'tools.import.title'|trans }}</h3>
         </div>
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="box box-primary">
+    <div class="box box-primary acb-form">
         <div class="box-header">
             <h3>{{ 'tools.export.title'|trans }}</h3>
         </div>
@@ -64,9 +64,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/sherlockodesonataadvancedcontent/js/acb-sonata.js') }}"></script>
 {% endblock %}

@@ -25,15 +25,17 @@ return [
 ];
 ```
 
-
-Add the specific CSS and JS files from the bundle to the Sonata configuration:
+You will need to add our specific CSS and JS files to your application via webpack or Sonata configuration.
+For example, you can add the following lines to your Sonata configuration:
 
 ```yaml
+# config/packages/sonata_admin.yaml
 sonata_admin:
     assets:
         extra_javascripts:
             - bundles/sherlockodeadvancedcontent/js/acb.js
             - bundles/sherlockodeadvancedcontent/js/speakingurl.min.js
+            - bundles/sherlockodesonataadvancedcontent/js/acb-sonata.js
         extra_stylesheets:
             - bundles/sherlockodeadvancedcontent/css/acb.css
 ```
