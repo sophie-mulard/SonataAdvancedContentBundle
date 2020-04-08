@@ -33,8 +33,8 @@ For example, you can add the following lines to your Sonata configuration:
 sonata_admin:
     assets:
         extra_javascripts:
-            - bundles/sherlockodeadvancedcontent/js/acb.js
             - bundles/sherlockodeadvancedcontent/js/speakingurl.min.js
+            - bundles/sherlockodeadvancedcontent/js/acb.js
             - bundles/sherlockodesonataadvancedcontent/js/acb-sonata.js
         extra_stylesheets:
             - bundles/sherlockodeadvancedcontent/css/acb.css
