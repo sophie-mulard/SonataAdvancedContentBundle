@@ -4,6 +4,7 @@ namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
 use Sherlockode\AdvancedContentBundle\Form\Type\ContentType;
 use Sherlockode\AdvancedContentBundle\Manager\ContentTypeManager;
+use Sherlockode\AdvancedContentBundle\Model\ContentInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -151,5 +152,19 @@ class ContentAdmin extends AbstractAdmin
         }
 
         return $actions;
+    }
+
+    /**
+     * @param $object
+     *
+     * @return string
+     */
+    public function toString($object)
+    {
+        if ($object instanceof ContentInterface && $object->getName()) {
+            return $object->getName();
+        }
+
+        return parent::toString($object);
     }
 }

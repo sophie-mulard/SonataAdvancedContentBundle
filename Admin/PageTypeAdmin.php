@@ -3,6 +3,7 @@
 namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
 use Sherlockode\AdvancedContentBundle\Form\Type\PageTypeType;
+use Sherlockode\AdvancedContentBundle\Model\PageTypeInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -48,5 +49,19 @@ class PageTypeAdmin extends AbstractAdmin
                 ],
             ])
         ;
+    }
+
+    /**
+     * @param $object
+     *
+     * @return string
+     */
+    public function toString($object)
+    {
+        if ($object instanceof PageTypeInterface && $object->getName()) {
+            return $object->getName();
+        }
+
+        return parent::toString($object);
     }
 }
