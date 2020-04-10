@@ -114,6 +114,20 @@ class PageAdmin extends AbstractAdmin
     }
 
     /**
+     * @param $object
+     *
+     * @return string
+     */
+    public function toString($object)
+    {
+        if ($object instanceof PageInterface && $object->getTitle()) {
+            return $object->getTitle();
+        }
+
+        return parent::toString($object);
+    }
+
+    /**
      * @param ConfigurationManager $configurationManager
      */
     public function setConfigurationManager(ConfigurationManager $configurationManager)

@@ -6,12 +6,11 @@ use Sherlockode\AdvancedContentBundle\Form\Type\ContentTypeFormType;
 use Sherlockode\AdvancedContentBundle\Form\Type\FieldsType;
 use Sherlockode\AdvancedContentBundle\Manager\ConfigurationManager;
 use Sherlockode\AdvancedContentBundle\Manager\ContentTypeManager;
-use Sherlockode\AdvancedContentBundle\Model\ContentType;
+use Sherlockode\AdvancedContentBundle\Model\ContentTypeInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ContentTypeAdmin extends AbstractAdmin
@@ -131,9 +130,14 @@ class ContentTypeAdmin extends AbstractAdmin
         $this->contentTypeManager->processFieldsChangeType($object, $this->fieldTypes);
     }
 
+    /**
+     * @param $object
+     *
+     * @return string
+     */
     public function toString($object)
     {
-        if ($object instanceof ContentType && $object->getName()) {
+        if ($object instanceof ContentTypeInterface && $object->getName()) {
             return $object->getName();
         }
 
