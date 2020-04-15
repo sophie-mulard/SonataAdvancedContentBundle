@@ -19,7 +19,7 @@ class PageExtension extends AbstractAdminExtension
     {
         if ($formMapper->has('pageType')) {
             $formMapper->tab('page.form.tabs.label')
-                ->with('page.form.tabs.general')->end(); // init the groups data for this admin class
+                ->with('page.form.tabs.general');
 
             $formMapper->add('pageType', ModelType::class, [
                 'label' => 'page.form.page_type',
@@ -30,6 +30,7 @@ class PageExtension extends AbstractAdminExtension
             ], [
                 'admin_code' => 'sherlockode_advanced_content.admin.page_type'
             ]);
+            $formMapper->end()->end();
         }
     }
 
