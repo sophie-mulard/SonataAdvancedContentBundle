@@ -30,11 +30,18 @@ services:
         arguments: [~, ~, ~]
         calls:
             - [setTranslationDomain, ['AdvancedContentBundle']]
-            - [setConfigurationManager, ['@sherlockode_advanced_content.configuration_manager']]
             - [setPageManager, ['@sherlockode_advanced_content.page_manager']]
             - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Page/edit.html.twig']]
         tags:
             - { name: sonata.admin, manager_type: orm, group: content.label, label: page.label, show_in_dashboard: true}
+
+
+    sherlockode_advanced_content.admin.page_extesnion:
+        class: Sherlockode\SonataAdvancedContentBundle\Admin\Extension\PageExtension
+        calls:
+            - [setConfigurationManager, ['@sherlockode_advanced_content.configuration_manager']]
+        tags:
+            - { name: sonata.admin.extension, target: sherlockode_advanced_content.admin.page }
 
     sherlockode_advanced_content.sonata_menu_listener:
         class: Sherlockode\SonataAdvancedContentBundle\EventListener\MenuBuilderListener

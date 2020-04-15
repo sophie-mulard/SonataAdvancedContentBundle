@@ -39,22 +39,24 @@ class ContentAdmin extends AbstractAdmin
 
     public function configureFormFields(FormMapper $form)
     {
-        // We need to declare each form field through the form mapper to ensure they are displayed correctly
-        $form
-            ->add('name')
-            ->add('slug')
-            ->add('fieldValues')
-        ;
+        $form->with('default'); // init the groups data for this admin class
+        $groups = $this->getFormGroups();
+        $groups['default']['fields'] = [
+            'name' => 'name',
+            'slug' => 'slug',
+            'fieldValues' => 'fieldValues',
+        ];
+        $this->setFormGroups($groups);
     }
 
     /**
      * Create ContentType form
      *
-     * @return mixed
+     * @return FormBuilderInterface
      *
      * @throws \Exception
      */
-    private function getContentFormBuilder()
+    private function getCustomFormBuilder()
     {
         if ($this->hasParentFieldDescription() && $this->getParentFieldDescription()->getOption('content_type')) {
             $contentType = $this->getParentFieldDescription()->getOption('content_type');
@@ -81,16 +83,10 @@ class ContentAdmin extends AbstractAdmin
     {
         $this->formOptions['data_class'] = $this->getClass();
 
-        $formBuilder = $this->getContentFormBuilder();
+        $formBuilder = $this->getCustomFormBuilder();
         $this->defineFormBuilder($formBuilder);
 
         return $formBuilder;
-    }
-
-    public function defineFormBuilder(FormBuilderInterface $formBuilder)
-    {
-        $formBuilder = $this->getContentFormBuilder();
-        parent::defineFormBuilder($formBuilder);
     }
 
     public function configureListFields(ListMapper $list)

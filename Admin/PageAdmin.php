@@ -2,26 +2,17 @@
 
 namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
-use Sherlockode\AdvancedContentBundle\Form\Type\ContentType;
-use Sherlockode\AdvancedContentBundle\Manager\ConfigurationManager;
+use Sherlockode\AdvancedContentBundle\Form\Type\PageType;
 use Sherlockode\AdvancedContentBundle\Manager\PageManager;
 use Sherlockode\AdvancedContentBundle\Model\ContentTypeInterface;
 use Sherlockode\AdvancedContentBundle\Model\PageInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\ModelType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class PageAdmin extends AbstractAdmin
 {
-    /**
-     * @var ConfigurationManager
-     */
-    private $configurationManager;
-
     /**
      * @var PageManager
      */
@@ -37,62 +28,60 @@ class PageAdmin extends AbstractAdmin
 
     public function configureFormFields(FormMapper $form)
     {
-        $form
-            ->tab('page.form.tabs.label')
-                ->with('page.form.tabs.general')
-                    ->add('title', TextType::class, [
-                        'label' => 'page.form.title',
-                        'attr' => ['class' => 'acb-page-title']
-                    ])
-                    ->add('slug', TextType::class, [
-                        'label' => 'page.form.slug',
-                        'attr' => ['class' => !$this->getSubject()->getId() ? 'acb-page-slug' : ''],
-                    ])
-                    ->add('pageType', ModelType::class, [
-                        'label' => 'page.form.page_type',
-                        'class' => $this->configurationManager->getEntityClass('page_type'),
-                        'property' => 'name',
-                        'required' => false,
-                        'attr' => ['class' => 'acb-page-page-type'],
-                    ], [
-                        'admin_code' => 'sherlockode_advanced_content.admin.page_type'
-                    ])
-        ;
+        $form->tab('page.form.tabs.label')
+            ->with('page.form.tabs.general')->end(); // init the groups data for this admin class
+
+        $fields = [
+            'title' => 'title',
+            'slug' => 'slug',
+            'pageType' => 'pageType',
+        ];
         if ($this->getSubject()->getId()) {
-            $form
-                ->add('metaDescription', TextareaType::class, [
-                    'label' => 'page.form.meta_description',
-                    'required' => false,
-                ])
-                ->add('status', ChoiceType::class, [
-                    'label' => 'page.form.status',
-                    'choices' => [
-                        'page.form.statuses.draft' => PageInterface::STATUS_DRAFT,
-                        'page.form.statuses.published' => PageInterface::STATUS_PUBLISHED,
-                        'page.form.statuses.trash' => PageInterface::STATUS_TRASH,
-                    ],
-                    'translation_domain' => 'AdvancedContentBundle',
-                ])
-            ;
+            $fields = array_merge($fields, [
+                'metaDescription' => 'metaDescription',
+                'status' => 'status',
+            ]);
         }
-        $form->end();
+
+        $groups = $this->getFormGroups();
+        $groups['page.form.tabs.label.page.form.tabs.general']['fields'] = $fields;
+        $this->setFormGroups($groups);
 
         if ($this->getSubject()->getId()) {
             $contentType = $this->pageManager->getPageContentType($this->getSubject());
             if ($contentType instanceof ContentTypeInterface) {
-                $form
-                    ->with('page.form.tabs.content')
-                    ->add('content', ContentType::class, [
-                        'label'       => 'page.form.content',
-                        'contentType' => $contentType,
-                    ], [
-                        'admin_code' => 'sherlockode_advanced_content.admin.content',
-                    ])
-                    ->end()
-                ;
+                $form->with('page.form.tabs.content')->end();
+                $fields = ['content' => 'content'];
+                $groups = $this->getFormGroups();
+                $groups['page.form.tabs.label.page.form.tabs.content']['fields'] = $fields;
+                $this->setFormGroups($groups);
             }
         }
         $form->end();
+    }
+
+    public function getFormBuilder()
+    {
+        $this->formOptions['data_class'] = $this->getClass();
+
+        $formBuilder = $this->getCustomFormBuilder();
+        $this->defineFormBuilder($formBuilder);
+
+        return $formBuilder;
+    }
+
+    /**
+     * Create PageType form
+     *
+     * @return FormBuilderInterface
+     *
+     * @throws \Exception
+     */
+    private function getCustomFormBuilder()
+    {
+        return $this->getFormContractor()
+            ->getFormFactory()
+            ->createNamedBuilder($this->getUniqid(), PageType::class, null, $this->formOptions);
     }
 
     public function configureListFields(ListMapper $list)
@@ -125,14 +114,6 @@ class PageAdmin extends AbstractAdmin
         }
 
         return parent::toString($object);
-    }
-
-    /**
-     * @param ConfigurationManager $configurationManager
-     */
-    public function setConfigurationManager(ConfigurationManager $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
     }
 
     /**
