@@ -3,6 +3,7 @@
 namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
 use Sherlockode\AdvancedContentBundle\Form\Type\PageType;
+use Sherlockode\AdvancedContentBundle\Locale\LocaleProviderInterface;
 use Sherlockode\AdvancedContentBundle\Manager\PageManager;
 use Sherlockode\AdvancedContentBundle\Model\ContentTypeInterface;
 use Sherlockode\AdvancedContentBundle\Model\PageInterface;
@@ -17,6 +18,11 @@ class PageAdmin extends AbstractAdmin
      * @var PageManager
      */
     private $pageManager;
+
+    /**
+     * @var LocaleProviderInterface
+     */
+    private $localeProvider;
 
     public function getFormTheme()
     {
@@ -51,7 +57,11 @@ class PageAdmin extends AbstractAdmin
             $contentType = $this->pageManager->getPageContentType($this->getSubject());
             if ($contentType instanceof ContentTypeInterface) {
                 $form->with('page.form.tabs.content')->end();
-                $fields = ['content' => 'content'];
+                if ($this->localeProvider->isMultilangEnabled()) {
+                    $fields = ['contents' => 'contents'];
+                } else {
+                    $fields = ['content' => 'content'];
+                }
                 $groups = $this->getFormGroups();
                 $groups['page.form.tabs.label.page.form.tabs.content']['fields'] = $fields;
                 $this->setFormGroups($groups);
@@ -122,5 +132,13 @@ class PageAdmin extends AbstractAdmin
     public function setPageManager(PageManager $pageManager)
     {
         $this->pageManager = $pageManager;
+    }
+
+    /**
+     * @param LocaleProviderInterface $localeProvider
+     */
+    public function setLocaleProvider(LocaleProviderInterface $localeProvider)
+    {
+        $this->localeProvider = $localeProvider;
     }
 }

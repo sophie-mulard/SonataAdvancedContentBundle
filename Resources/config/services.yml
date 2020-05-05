@@ -31,6 +31,7 @@ services:
         calls:
             - [setTranslationDomain, ['AdvancedContentBundle']]
             - [setPageManager, ['@sherlockode_advanced_content.page_manager']]
+            - [setLocaleProvider, ['@sherlockode_advanced_content.locale_provider']]
             - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Page/edit.html.twig']]
         tags:
             - { name: sonata.admin, manager_type: orm, group: content.label, label: page.label, show_in_dashboard: true}
