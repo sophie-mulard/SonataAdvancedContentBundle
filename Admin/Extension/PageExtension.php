@@ -25,6 +25,7 @@ class PageExtension extends AbstractAdminExtension
                 'label' => 'page.form.page_type',
                 'class' => $this->configurationManager->getEntityClass('page_type'),
                 'property' => 'name',
+                'choice_translation_domain' => false,
                 'required' => false,
                 'attr' => ['class' => 'acb-page-page-type'],
             ], [
