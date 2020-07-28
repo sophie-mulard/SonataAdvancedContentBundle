@@ -38,19 +38,27 @@ class PageAdmin extends AbstractAdmin
             ->with('page.form.tabs.general')->end(); // init the groups data for this admin class
 
         $fields = [
-            'title' => 'title',
-            'slug' => 'slug',
+            'pageIdentifier' => 'pageIdentifier',
             'pageType' => 'pageType',
         ];
         if ($this->getSubject()->getId()) {
             $fields = array_merge($fields, [
-                'metaDescription' => 'metaDescription',
                 'status' => 'status',
             ]);
         }
 
         $groups = $this->getFormGroups();
         $groups['page.form.tabs.label.page.form.tabs.general']['fields'] = $fields;
+        $this->setFormGroups($groups);
+
+        $form->with('page.form.tabs.meta')->end();
+        if ($this->localeProvider->isMultilangEnabled()) {
+            $fields = ['pageMetas' => 'pageMetas'];
+        } else {
+            $fields = ['pageMeta' => 'pageMeta'];
+        }
+        $groups = $this->getFormGroups();
+        $groups['page.form.tabs.label.page.form.tabs.meta']['fields'] = $fields;
         $this->setFormGroups($groups);
 
         if ($this->getSubject()->getId()) {
@@ -97,8 +105,11 @@ class PageAdmin extends AbstractAdmin
     public function configureListFields(ListMapper $list)
     {
         $list
-            ->add('title', null, ['label' => 'page.form.title'])
-            ->add('slug', null, ['label' => 'page.form.slug'])
+            ->add('pageIdentifier', null, ['label' => 'page.form.page_identifier'])
+            ->add('title', null, [
+                'label' => 'page.form.title',
+                'template' => '@SherlockodeSonataAdvancedContent/Page/title.html.twig'
+            ])
             ->add('status', null, [
                 'label' => 'page.form.status',
                 'template' => '@SherlockodeSonataAdvancedContent/Page/status.html.twig'
@@ -119,8 +130,8 @@ class PageAdmin extends AbstractAdmin
      */
     public function toString($object)
     {
-        if ($object instanceof PageInterface && $object->getTitle()) {
-            return $object->getTitle();
+        if ($object instanceof PageInterface && $object->getPageIdentifier()) {
+            return $object->getPageIdentifier();
         }
 
         return parent::toString($object);
