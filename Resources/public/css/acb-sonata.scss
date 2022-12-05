@@ -1,0 +1,28 @@
+$zindex: 1030;
+
+@media screen and (min-width: 576px) {
+  .acb-lateral-slide {
+    width: calc(100% - 230px);
+    margin-right: calc(230px - 100%);
+  }
+}
+.acb-lateral-slide {
+  z-index: $zindex + 1;
+  .acb-lateral-slide-header {
+    height: 50px;
+    padding: 10px 16px;
+    h1 {
+      margin: 0;
+    }
+  }
+  .btn-close {
+    top: 10px;
+  }
+}
+.acb-lateral-slide-open .acb-lateral-slide-layer {
+  z-index: $zindex;
+}
+
+.box-content-field-values fieldset > legend {
+  display: none;
+}

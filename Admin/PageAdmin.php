@@ -4,8 +4,6 @@ namespace Sherlockode\SonataAdvancedContentBundle\Admin;
 
 use Sherlockode\AdvancedContentBundle\Form\Type\PageType;
 use Sherlockode\AdvancedContentBundle\Locale\LocaleProviderInterface;
-use Sherlockode\AdvancedContentBundle\Manager\PageManager;
-use Sherlockode\AdvancedContentBundle\Model\ContentTypeInterface;
 use Sherlockode\AdvancedContentBundle\Model\PageInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -14,11 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PageAdmin extends AbstractAdmin
 {
-    /**
-     * @var PageManager
-     */
-    private $pageManager;
-
     /**
      * @var LocaleProviderInterface
      */
@@ -62,18 +55,16 @@ class PageAdmin extends AbstractAdmin
         $this->setFormGroups($groups);
 
         if ($this->getSubject()->getId()) {
-            $contentType = $this->pageManager->getPageContentType($this->getSubject());
-            if ($contentType instanceof ContentTypeInterface) {
-                $form->with('page.form.tabs.content')->end();
-                if ($this->localeProvider->isMultilangEnabled()) {
-                    $fields = ['contents' => 'contents'];
-                } else {
-                    $fields = ['content' => 'content'];
-                }
-                $groups = $this->getFormGroups();
-                $groups['page.form.tabs.label.page.form.tabs.content']['fields'] = $fields;
-                $this->setFormGroups($groups);
+            $form->with('page.form.tabs.content')->end();
+            if ($this->localeProvider->isMultilangEnabled()) {
+                $fields = ['contents' => 'contents'];
+            } else {
+                $fields = ['content' => 'content'];
             }
+            $groups = $this->getFormGroups();
+            $groups['page.form.tabs.label.page.form.tabs.content']['fields'] = $fields;
+            $groups['page.form.tabs.label.page.form.tabs.content']['box_class'] = 'box box-primary box-content-field-values';
+            $this->setFormGroups($groups);
         }
         $form->end();
     }
@@ -135,14 +126,6 @@ class PageAdmin extends AbstractAdmin
         }
 
         return parent::toString($object);
-    }
-
-    /**
-     * @param PageManager $pageManager
-     */
-    public function setPageManager(PageManager $pageManager)
-    {
-        $this->pageManager = $pageManager;
     }
 
     /**

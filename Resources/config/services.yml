@@ -1,23 +1,11 @@
 services:
-    sherlockode_advanced_content.admin.content_type:
-        class: Sherlockode\SonataAdvancedContentBundle\Admin\ContentTypeAdmin
-        arguments: [~, ~, ~]
-        calls:
-            - [setContentTypeManager, ['@sherlockode_advanced_content.content_type_manager']]
-            - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/ContentType/edit.html.twig']]
-            - [setTranslationDomain, ['AdvancedContentBundle']]
-            - [setConfigurationManager, ['@sherlockode_advanced_content.configuration_manager']]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: content.label, label: content_type.label, show_in_dashboard: true}
     sherlockode_advanced_content.admin.content:
         class: Sherlockode\SonataAdvancedContentBundle\Admin\ContentAdmin
         arguments: [~, ~, ~]
         calls:
             - [setTranslationDomain, ['AdvancedContentBundle']]
-            - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Content/edit.html.twig']]
-            - [setContentTypeManager, ['@sherlockode_advanced_content.content_type_manager']]
         tags:
-            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+            - { name: sonata.admin, manager_type: orm, group: content.label, label: content.label, show_in_dashboard: true}
     sherlockode_advanced_content.admin.page_type:
         class: Sherlockode\SonataAdvancedContentBundle\Admin\PageTypeAdmin
         arguments: [~, ~, ~]
@@ -30,7 +18,6 @@ services:
         arguments: [~, ~, ~]
         calls:
             - [setTranslationDomain, ['AdvancedContentBundle']]
-            - [setPageManager, ['@sherlockode_advanced_content.page_manager']]
             - [setLocaleProvider, ['@sherlockode_advanced_content.locale_provider']]
             - [setTemplate, [edit, '@@SherlockodeSonataAdvancedContent/Page/edit.html.twig']]
         tags:
@@ -46,8 +33,5 @@ services:
 
     sherlockode_advanced_content.sonata_menu_listener:
         class: Sherlockode\SonataAdvancedContentBundle\EventListener\MenuBuilderListener
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@sherlockode_advanced_content.configuration_manager'
         tags:
             - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }
