@@ -25,8 +25,25 @@ return [
 ];
 ```
 
-You will need to add our specific CSS and JS files to your application via webpack or Sonata configuration.
-For example, you can add the following lines to your Sonata configuration:
+You will need to add our specific CSS and JS files to your application via webpack and Sonata configuration.
+
+```js
+// assets/js/app.js
+
+// sherlockode/advanced-content-bundle configuration
+import '../../vendor/sherlockode/advanced-content-bundle/Resources/public/css/index.scss';
+import '../../vendor/sherlockode/advanced-content-bundle/Resources/js/index.js';
+
+// font awesome (optional)
+import '@fortawesome/fontawesome-free/css/fontawesome.css';
+import '@fortawesome/fontawesome-free/css/solid.css';
+
+// sherlockode/sonata-advanced-content-bundle configuration
+import '../../vendor/sherlockode/sonata-advanced-content-bundle/Resources/js/acb-sonata.js';
+import '../../vendor/sherlockode/sonata-advanced-content-bundle/Resources/css/acb-sonata.scss';
+```
+
+You can then add the following lines to your Sonata configuration:
 
 ```yaml
 # config/packages/sonata_admin.yaml
@@ -34,17 +51,15 @@ sonata_admin:
     assets:
         extra_javascripts:
             - bundles/sherlockodeadvancedcontent/js/speakingurl.min.js
-            - bundles/sherlockodeadvancedcontent/js/acb.js
-            - bundles/sherlockodesonataadvancedcontent/js/acb-sonata.js
+            - build/admin/admin-entry.js # Include here the path to your webpack generated admin js file
         extra_stylesheets:
-            - bundles/sherlockodeadvancedcontent/css/acb.css
+            - build/admin/admin-entry.css # Include here the path to your webpack generated admin css file
 ```
 
 ## Security
 
 By default our admins are accessible by ROLE_SUPER_ADMIN. 
 To configure your own role hierarchy, you can use the roles : 
-- ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_TYPE_[PERMISSION] : access to Content Types
 - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_[PERMISSION] : access to Contents
 - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_PAGE_TYPE_[PERMISSION] : access to Page Types
 - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_PAGE_[PERMISSION] : access to Pages
@@ -55,7 +70,6 @@ For example, if you want to grant all permissions for ROLE_ADMIN, you can add :
 security:
     role_hierarchy:
         ROLE_ADMIN:
-            - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_TYPE_ALL
             - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_CONTENT_ALL
             - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_PAGE_TYPE_ALL
             - ROLE_SHERLOCKODE_ADVANCED_CONTENT_ADMIN_PAGE_ALL
