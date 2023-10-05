@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^7.4 || ^8.1",
-        "sherlockode/advanced-content-bundle": "~0.8.0",
+        "sherlockode/advanced-content-bundle": "^0.9",
         "sonata-project/admin-bundle": "4.*",
         "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.0"
     },
